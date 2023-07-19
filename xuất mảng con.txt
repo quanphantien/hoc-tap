@@ -1,0 +1,41 @@
+#include <iostream>
+#define MAX 100
+using namespace std;
+void printarray(int a[], bool trace[], int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		if (trace[i])
+			cout << a[i] << " ";
+	}
+	cout << endl;
+}
+void findsubarray(int n,int start, int a[], bool trace[], int sum, int acc)
+{
+	if (acc == sum)
+	{
+		printarray(a, trace, n);
+		return;
+	}
+	for (int i = start; i < n; i++)
+	{
+		acc += a[i];
+		trace[i] = true;
+		findsubarray(n, i + 1, a, trace, sum, acc);
+		acc -= a[i];
+		trace[i] = false;
+	}
+}
+int main()
+{
+	int a[] = { 1,2,3,4,5,6,7,8 };
+	bool trace[MAX] = { false };
+	int n=sizeof(a)/sizeof(int);
+	int sum=13;
+	/*
+	cout << "hay nhap n va sum: ";
+	cin >> n >> sum;
+	*/
+	findsubarray(n, 0, a, trace, sum, 0);
+	return 0;
+}
